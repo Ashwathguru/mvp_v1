@@ -147,11 +147,12 @@ def reportsGPT():
                                 components.html(my_html, width=0, height=0)
             with subcol3_1:
                 chat_button = st.button(label=":keyboard:",key="chat")
+                query_2 = "placeholder"
                 if chat_button:
                     with col2:
                         query_2 = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
                         st.info(query_2)
-                        if st.button("Submit"):
+                        if query_2 !="placeholder" and st.button("Submit"):
                             st.info("button click caught")
                             response_2=get_answer_csv(query_2)
                             st.info("got resp")
