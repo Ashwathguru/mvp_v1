@@ -118,43 +118,45 @@ def reportsGPT():
             subcol1_1, subcol2_1, subcol3_1 = st.columns([1, 1, 1])
             with subcol1_1:
                 audio_bytes = audio_recorder(text="")
+                if audio_bytes:
+                    st.cache_data.clear()
+                    save_audio_file(audio_bytes, "mp3")
+                    audio_file_path = max(
+                        [f for f in os.listdir(".") if f.startswith("audio")],
+                        key=os.path.getctime,
+                    )
+                    # Transcribe the audio file
+                    transcript_text = transcribe_audio(audio_file_path)
+                    if transcript_text != "I'm sorry, I couldn't catch that. Could you please repeat your question?":
+                        with col3:
+                            # Display the transcript
+                            st.header("Transcript",divider="red")
+                            st.header(transcript_text)
+                            query=transcript_text
+                            response=get_answer_csv(query)
+                            if response != "":
+                                resp = ":green["+response+"]"
+                                st.header(":green["+response+"]")
+                                js_code="""
+                                var u = new SpeechSynthesisUtterance();
+                                u.text = "{response}";
+                                u.lang = 'en-US';
+                                speechSynthesis.speak(u);
+                                """.format(response=response)
+                                my_html = f"<script>{js_code}</script>"
+                                components.html(my_html, width=0, height=0)
             with subcol3_1:
                 chat_button = st.button(label=":keyboard:",key="chat")
-            if chat_button:
-                with col2:
-                    query = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
-                    button = st.button("Submit")
-                    if button:
-                        response=get_answer_csv(query)
-                        if response != "":
-                            st.write(response)
-        if audio_bytes:
-            st.cache_data.clear()
-            save_audio_file(audio_bytes, "mp3")
-            audio_file_path = max(
-                [f for f in os.listdir(".") if f.startswith("audio")],
-                key=os.path.getctime,
-            )
-            # Transcribe the audio file
-            transcript_text = transcribe_audio(audio_file_path)
-            if transcript_text != "I'm sorry, I couldn't catch that. Could you please repeat your question?":
-                with col3:
-                    # Display the transcript
-                    st.header("Transcript",divider="red")
-                    st.header(transcript_text)
-                    query=transcript_text
-                    response=get_answer_csv(query)
-                    if response != "":
-                        resp = ":green["+response+"]"
-                        st.header(":green["+response+"]")
-                        js_code="""
-                        var u = new SpeechSynthesisUtterance();
-                        u.text = "{response}";
-                        u.lang = 'en-US';
-                        speechSynthesis.speak(u);
-                        """.format(response=response)
-                        my_html = f"<script>{js_code}</script>"
-                        components.html(my_html, width=0, height=0)
+                if chat_button:
+                    with col2:
+                        query = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
+                        button = st.button("Submit")
+                        if button:
+                            response=get_answer_csv(query)
+                            if response != "":
+                                resp = ":green["+response+"]"
+                                st.header(resp)
+        
     #Chat Tab
     with tab2:
         st.write('Hpe it works')
