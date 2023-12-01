@@ -119,15 +119,15 @@ def reportsGPT():
             with subcol1_1:
                 audio_bytes = audio_recorder(text="")
             with subcol3_1:
-                st.button(label=":keyboard:",key="chat")
-        if st.button(label=":keyboard:",key="chat"):
-            with col2:
-                query = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
-                button = st.button("Submit")
-                if button:
-                    response=get_answer_csv(query)
-                    if response != "":
-                        st.write(response)
+                chat_button = st.button(label=":keyboard:",key="chat")
+            if chat_button:
+                with col2:
+                    query = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
+                    button = st.button("Submit")
+                    if button:
+                        response=get_answer_csv(query)
+                        if response != "":
+                            st.write(response)
         if audio_bytes:
             st.cache_data.clear()
             save_audio_file(audio_bytes, "mp3")
