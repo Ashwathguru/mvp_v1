@@ -150,9 +150,11 @@ def reportsGPT():
                 if chat_button:
                     with col2:
                         query = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
-                        button = st.button("Submit")
-                        if button:
+                        st.info(query)
+                        if st.button("Submit"):
+                            st.info("button click caught")
                             response=get_answer_csv(query)
+                            st.info("got resp")
                             if response != "":
                                 resp = ":green["+response+"]"
                                 st.header(resp)
