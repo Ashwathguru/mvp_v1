@@ -127,7 +127,7 @@ def reportsGPT():
         with col1:
             st.markdown("![Alt Text](https://media.giphy.com/media/3o7TKzAJQ0lX1PBxug/giphy.gif)")
             subcol1_1, subcol2_1, subcol3_1 = st.columns([1, 1, 1])
-            with subcol1_1:
+            with subcol2_1:
                 audio_bytes = audio_recorder(text="")
                 if audio_bytes:
                     st.cache_data.clear()
@@ -147,7 +147,7 @@ def reportsGPT():
                             response=get_answer_csv(query)
                             if response != "":
                                 resp = ":green["+response+"]"
-                                st.header(":green["+response+"]")
+                                st.header(resp)
                                 js_code="""
                                 var u = new SpeechSynthesisUtterance();
                                 u.text = "{response}";
@@ -156,21 +156,11 @@ def reportsGPT():
                                 """.format(response=response)
                                 my_html = f"<script>{js_code}</script>"
                                 components.html(my_html, width=0, height=0)
-            with subcol3_1:
-                chat_button = st.button(label=":keyboard:",key="chat")
-                if chat_button:
-                    with col2:
-                        chat_feature()
+                        
         
     #Chat Tab
     with tab2:
-        st.write('Hpe it works')
-    #    query = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
-    #    button = st.button("Submit")
-    #    if button:
-    #        response=get_answer_csv(query)
-    #        if response != "":
-    #            st.write(response)
+        chat_feature()
 
 
 # Set up the working directory
