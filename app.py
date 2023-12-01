@@ -120,7 +120,7 @@ def reportsGPT():
                 audio_bytes = audio_recorder(text="")
             with subcol3_1:
                 st.button(label=":keyboard:",key="chat")
-        if st.button(key="chat"):
+        if st.button(label=":keyboard:",key="chat"):
             with col2:
                 query = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
                 button = st.button("Submit")
