@@ -108,11 +108,8 @@ def text_to_speech(text):
 
 def chat_feature():
     query_2 = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
-    st.info(query_2)
     if query_2 !="placeholder" and st.button("Submit"):
-        st.info("button click caught")
         response_2=get_answer_csv(query_2)
-        st.info("got resp")
         if response_2 != "":
             resp_2 = ":green["+response_2+"]"
             st.header(resp_2)
