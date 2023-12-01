@@ -106,6 +106,17 @@ def text_to_speech(text):
     """
     st.markdown(audio_code, unsafe_allow_html=True)
 
+def chat_feature():
+    query_2 = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
+    st.info(query_2)
+    if query_2 !="placeholder" and st.button("Submit"):
+        st.info("button click caught")
+        response_2=get_answer_csv(query_2)
+        st.info("got resp")
+        if response_2 != "":
+            resp_2 = ":green["+response_2+"]"
+            st.header(resp_2)
+
 def reportsGPT():
     st.image("images/report_charts.jpg", use_column_width="always")
     st.write("Ask about it")
@@ -147,18 +158,9 @@ def reportsGPT():
                                 components.html(my_html, width=0, height=0)
             with subcol3_1:
                 chat_button = st.button(label=":keyboard:",key="chat")
-                query_2 = "placeholder"
                 if chat_button:
                     with col2:
-                        query_2 = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
-                        st.info(query_2)
-                        if query_2 !="placeholder" and st.button("Submit"):
-                            st.info("button click caught")
-                            response_2=get_answer_csv(query_2)
-                            st.info("got resp")
-                            if response_2 != "":
-                                resp_2 = ":green["+response_2+"]"
-                                st.header(resp_2)
+                        chat_feature()
         
     #Chat Tab
     with tab2:
