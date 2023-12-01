@@ -116,8 +116,18 @@ def reportsGPT():
         with col1:
             st.markdown("![Alt Text](https://media.giphy.com/media/3o7TKzAJQ0lX1PBxug/giphy.gif)")
             subcol1_1, subcol2_1, subcol3_1 = st.columns([1, 1, 1])
-            with subcol2_1:
+            with subcol1_1:
                 audio_bytes = audio_recorder(text="")
+            with subcol3_1:
+                st.button(label=":keyboard:",key="chat")
+        if st.button(key="chat"):
+            with col2:
+                query = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
+                button = st.button("Submit")
+                if button:
+                    response=get_answer_csv(query)
+                    if response != "":
+                        st.write(response)
         if audio_bytes:
             st.cache_data.clear()
             save_audio_file(audio_bytes, "mp3")
@@ -147,12 +157,13 @@ def reportsGPT():
                         components.html(my_html, width=0, height=0)
     #Chat Tab
     with tab2:
-        query = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
-        button = st.button("Submit")
-        if button:
-            response=get_answer_csv(query)
-            if response != "":
-                st.write(response)
+        st.write('Hpe it works')
+    #    query = st.text_area("Ask any question related to the tickets",label_visibility="hidden")
+    #    button = st.button("Submit")
+    #    if button:
+    #        response=get_answer_csv(query)
+    #        if response != "":
+    #            st.write(response)
 
 
 # Set up the working directory
